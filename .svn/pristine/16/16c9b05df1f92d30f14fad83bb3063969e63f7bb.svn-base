@@ -1,0 +1,22 @@
+package com.hzit.proxy.message;
+
+import com.hzit.proxy.WXBaseProxy;
+
+public class WXProxyMessage extends WXBaseProxy {
+
+	private static String SEND_KF_MSG_URL = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token="
+			+ ACCESS_TOKEN;
+
+	/**
+	 * 发送客服消息
+	 * 
+	 * @param msgStr
+	 * @return
+	 */
+	public static String sendMsg(String msgStr) {
+		String post = post(SEND_KF_MSG_URL, msgStr);
+		return post;
+
+	}
+
+}

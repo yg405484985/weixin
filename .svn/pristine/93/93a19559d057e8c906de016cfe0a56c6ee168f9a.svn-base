@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript">
+	Date.prototype.pattern = function(fmt) {
+		var o = {
+			"M+" : this.getMonth() + 1, //月份         
+			"d+" : this.getDate(), //日         
+			"h+" : this.getHours() % 12 == 0 ? 12 : this.getHours() % 12, //小时         
+			"H+" : this.getHours(), //小时         
+			"m+" : this.getMinutes(), //分         
+			"s+" : this.getSeconds(), //秒         
+			"q+" : Math.floor((this.getMonth() + 3) / 3), //季度         
+			"S" : this.getMilliseconds()
+		//毫秒         
+		};
+		var week = {
+			"0" : "/u65e5",
+			"1" : "/u4e00",
+			"2" : "/u4e8c",
+			"3" : "/u4e09",
+			"4" : "/u56db",
+			"5" : "/u4e94",
+			"6" : "/u516d"
+		};
+		if (/(y+)/.test(fmt)) {
+			fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "")
+					.substr(4 - RegExp.$1.length));
+		}
+		if (/(E+)/.test(fmt)) {
+			fmt = fmt
+					.replace(
+							RegExp.$1,
+							((RegExp.$1.length > 1) ? (RegExp.$1.length > 2 ? "/u661f/u671f"
+									: "/u5468")
+									: "")
+									+ week[this.getDay() + ""]);
+		}
+		for ( var k in o) {
+			if (new RegExp("(" + k + ")").test(fmt)) {
+				fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k])
+						: (("00" + o[k]).substr(("" + o[k]).length)));
+			}
+		}
+		return fmt;
+	}
+
+	//	var date = new Date(1515050496*1000);
+	//	window.alert(date.pattern("yyyy-MM-dd hh:mm:ss"));
+
+	$(function() {
+
+		$
+				.getJSON(
+						"getUserInfoList",
+						function(data) {
+
+							var $table = $("#mytable");
+							$
+									.each(
+											data.user_info_list,
+											function(index, userInfo) {
+
+												var tr = "<tr>";
+												tr = tr + "<td>"
+														+ userInfo.openid
+														+ "</td>"
+												tr = tr
+														+ "<td><img src='"+userInfo.headimgurl+"' height='30px' width='30px' /></td>"
+												tr = tr + "<td>"
+														+ userInfo.nickname
+														+ "</td>"
+												tr = tr + "<td>" + userInfo.sex
+														+ "</td>"
+												tr = tr + "<td>"
+														+ userInfo.country
+														+ userInfo.province
+														+ userInfo.city
+														+ "</td>"
+												tr = tr + "<td>"
+														+ userInfo.subscribe
+														+ "</td>"
+												tr = tr
+														+ "<td>"
+														+ new Date(
+																userInfo.subscribe_time * 1000)
+																.pattern("yyyy-MM-dd hh:mm:ss")
+														+ "</td>"
+												tr = tr
+														+ "<td><a href='SendMsg.html?openId="+userInfo.openid+"'>发送消息</a></td>"
+
+												$table.append($(tr));
+											})
+
+						});
+
+	})
+</script>
+
+</head>
+<body>
+	<center>
+		<h1>所有粉丝</h1>
+		<table id="mytable" border="1px" width="1000px" cellspacing="0px">
+			<tr>
+				<th>openId</th>
+				<th>图片</th>
+				<th>昵称</th>
+				<th>性别</th>
+				<th>地区</th>
+				<th>是否关注</th>
+				<th>关注时间</th>
+				<th>发送消息</th>
+			<tr>
+		</table>
+	</center>
+
+</body>
+</html>

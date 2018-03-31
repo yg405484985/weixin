@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+	//获取直接的参数
+	function GetQueryString(name) {
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+		var r = window.location.search.substr(1).match(reg);
+		if (r != null)
+			return unescape(r[2]);
+		return null;
+	}
+
+	$(function() {
+
+		var openId = GetQueryString("openId");
+
+		$("#openId").val(openId);
+		
+		
+		
+	})
+</script>
+</head>
+<body>
+
+
+	<form action="sendTextMsg" method="post">
+
+		收件人:<input type="text" name="openId" readonly="readonly" id="openId">
+		<br /> 内容:
+		<textarea rows="5" cols="50" name="context">
+		
+		</textarea>
+
+		<input type="submit" value="发送">
+
+
+	</form>
+
+
+</body>
+</html>

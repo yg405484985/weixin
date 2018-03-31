@@ -1,0 +1,40 @@
+package com.hzit.proxy;
+
+import com.hzit.token.jedis.WXTokenUtil;
+import com.hzit.util.WXNetUtil;
+
+/**
+ * 代理的基础类 完成公共部分的功能
+ * 
+ * @author THINK
+ *
+ */
+public class WXBaseProxy {
+
+	protected static String ACCESS_TOKEN = "";
+	static {
+		ACCESS_TOKEN = WXTokenUtil.getToken();
+	}
+
+	/**
+	 * 调用get
+	 * 
+	 * @param url
+	 * @return
+	 */
+	protected static String get(String url) {
+		return WXNetUtil.get(url);
+	}
+
+	/**
+	 * 调用post
+	 * 
+	 * @param url
+	 * @param jsonStr
+	 * @return
+	 */
+	protected static String post(String url, String jsonStr) {
+		return WXNetUtil.post(url, jsonStr);
+	}
+
+}

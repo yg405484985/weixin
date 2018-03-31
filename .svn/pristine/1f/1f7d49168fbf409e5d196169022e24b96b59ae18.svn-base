@@ -1,0 +1,17 @@
+package com.hzit.entity.msg.text;
+
+import com.hzit.entity.msg.BaseMsg;
+
+public class TextMsg extends BaseMsg {
+
+	private TextMsgItem text;
+
+	public TextMsgItem getText() {
+		return text;
+	}
+
+	public void setText(TextMsgItem text) {
+		this.text = text;
+	}
+
+}
